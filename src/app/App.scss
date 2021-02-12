@@ -1,0 +1,12 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--main-bg-color);
+  color: var(--main-fg-color);
+}

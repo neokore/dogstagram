@@ -1,0 +1,13 @@
+:root {
+  --main-bg-color: #282c34;
+  --main-fg-color: #fff;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  // TODO: Set cool font family
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
