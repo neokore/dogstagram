@@ -1,0 +1,13 @@
+.PhotoViewer {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  overflow: hidden;
+  padding: 2.5vmin 0;
+}
+
+@media (min-width: 900px) {
+  .PhotoViewer {
+    flex-direction: row;
+  }
+}

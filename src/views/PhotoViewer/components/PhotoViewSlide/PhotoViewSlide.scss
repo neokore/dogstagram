@@ -1,0 +1,50 @@
+.PhotoSlide {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-auto-rows: 20vmax;
+  justify-items: stretch;
+  align-items: stretch;
+  gap: 10px 10px;
+  padding: 5vmin;
+  border-radius: 2vmin;
+  margin: 2.5vmin 5vmin;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  background-color: var(--main-fg-color);
+  color: var(--main-bg-color);
+  max-height: 100vh;
+  box-shadow: inset 2vmin 2vmin 4vmin #bebebe,
+            inset -2vmin -2vmin 4vmin #ffffff;
+
+  transition: max-height ease-in-out 1s .25s,
+              padding ease-in-out .25s,
+              margin linear 0s;
+
+  &:empty {
+    max-height: 0;
+    padding: 0;
+    margin: 0;
+    transition: max-height ease-in-out .5s,
+                padding ease-in-out .25s .5s,
+                margin linear 0s .75s;
+  }
+}
+
+@media (min-width: 900px) {
+  .PhotoSlide {
+    align-self: stretch;
+    max-width: 100vh;
+    transition: max-width ease-in-out 1s .25s,
+                padding ease-in-out .25s,
+                margin linear 0s;
+
+    &:empty {
+      max-width: 0;
+      padding: 0;
+      margin: 0;
+      transition: max-width ease-in-out .5s,
+                  padding ease-in-out .25s .25s,
+                  margin linear 0s .75s;
+    }
+  }
+}

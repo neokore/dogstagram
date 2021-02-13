@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Breed, getBreedList, getBreedPhotoList } from 'api/dogApi';
 import { AppThunk } from 'state/store';
+import { UserMessage, UserMessageType, clearUserMessage, setUserMessage } from './userMessageSlice';
 
 interface BreedState {
   isLoading: boolean,
-  error: string | null,
   breedList: Breed[], // {id: "breed/subbreed", name: "breed (subbreed)"}
   selectedBreed?: string | null, // id from breedList
   breedPhotoList: string[]
@@ -12,7 +12,6 @@ interface BreedState {
 
 const initialState = {
   isLoading: false,
-  error: null,
   breedList: [],
   selectedBreed: null,
   breedPhotoList: []
@@ -24,33 +23,32 @@ const breedSlice = createSlice({
   reducers: {
     fetchBreedListStart: (state) => {
       state.isLoading = true;
-      state.error = null;
+      state.breedList = [];
+      state.breedPhotoList = [];
     },
     fetchBreedListSuccess: (state, action: PayloadAction<Breed[]>) => {
       state.breedList = action.payload;
       state.isLoading = false;
-      state.error = null;
     },
-    fetchBreedListFailure: (state, action: PayloadAction<string>) => {
+    fetchBreedListFailure: (state) => {
       state.isLoading = false;
-      state.error = action.payload;
+      state.breedList = [];
     },
     setSelectedBreed: (state, action: PayloadAction<string>) => {
       state.selectedBreed = action.payload;
     },
     fetchBreedPhotoListStart: (state) => {
       state.isLoading = true;
-      state.error = null;
+      state.breedPhotoList = [];
     },
     fetchBreedPhotoListSuccess: (state, action: PayloadAction<string[]>) => {
       state.breedPhotoList = action.payload;
       state.isLoading = false;
-      state.error = null;
     },
-    fetchBreedPhotoListFailure: (state, action: PayloadAction<string>) => {
+    fetchBreedPhotoListFailure: (state) => {
       state.isLoading = false;
-      state.error = action.payload;
-    },
+      state.breedPhotoList = []
+    }
   }
 });
 
@@ -69,10 +67,12 @@ export const {
 export const fetchBreedList = (): AppThunk => async (dispatch) => {
   try {
     dispatch(fetchBreedListStart());
+    dispatch(clearUserMessage());
     const breeds = await getBreedList();
     dispatch(fetchBreedListSuccess(breeds));
   } catch (err) {
-    dispatch(fetchBreedListFailure(err));
+    dispatch(fetchBreedListFailure());
+    dispatch(setUserMessage({type: UserMessageType.error, message: err.message} as UserMessage));
   }
 };
 
@@ -80,9 +80,11 @@ export const selectBreed = (breedId: string): AppThunk => async (dispatch) => {
   try {
     dispatch(setSelectedBreed(breedId));
     dispatch(fetchBreedPhotoListStart());
+    dispatch(clearUserMessage());
     const photoList = await getBreedPhotoList(breedId);
     dispatch(fetchBreedPhotoListSuccess(photoList));
   } catch (err) {
-    dispatch(fetchBreedPhotoListFailure(err));
+    dispatch(fetchBreedPhotoListFailure());
+    dispatch(setUserMessage({type: UserMessageType.error, message: err.message} as UserMessage));
   }
 };

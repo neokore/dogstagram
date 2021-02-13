@@ -1,0 +1,7 @@
+{
+  "breedSelector": {
+    "label": "Select a breed",
+    "none": "None",
+    "errorBreed": "Wrong breed"
+  }
+}

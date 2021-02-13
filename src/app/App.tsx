@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import PhotoViewer from 'views/PhotoViewer/PhotoViewer';
+import UserMessageUI from 'components/UserMessageUI/UserMessageUI';
 import './App.scss';
+import 'i18n/i18n';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-      🐶 Dogstagram! 🐾
-      </header>
-      <PhotoViewer />
-    </div>
+    <Suspense fallback="loading">
+      <div className="App">
+        <header className="header">
+        🐶 Dogstagram! 🐾
+        </header>
+        <PhotoViewer />
+        <UserMessageUI />
+      </div>
+    </Suspense>
   );
 }
 

@@ -1,0 +1,7 @@
+{
+  "breedSelector": {
+    "label": "Selecciona una raza",
+    "none": "Ninguna",
+    "errorBreed": "Raza errónea"
+  }
+}

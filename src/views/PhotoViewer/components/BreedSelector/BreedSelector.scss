@@ -1,0 +1,36 @@
+.BreedSelector {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  padding: 6vmin;
+  border-radius: 2vmin;
+  margin: 2.5vmin 5vmin;
+  background-color: var(--main-fg-color);
+  color: var(--main-bg-color);
+  box-shadow: inset 2vmin 2vmin 4vmin #bebebe,
+            inset -2vmin -2vmin 4vmin #ffffff;
+
+  select {
+    background: linear-gradient(145deg, #f0f0f0, #cacaca);
+    box-shadow:  4px 4px 8px #bebebe,
+                 -4px -4px 8px #ffffff;
+    padding: 6px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 4px;
+    background-image: url('./drop-down-arrow.svg');
+    background-repeat: no-repeat;
+    background-position: calc(100% - 0.5em) center;
+    background-size: 1em;
+    padding-right: 1.5em;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    &, option {
+      text-transform: capitalize;
+    }
+  }
+}

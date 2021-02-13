@@ -1,0 +1,27 @@
+.PhotoView {
+  object-fit: cover;
+  background-image: url('./loading.png');
+  background-size: 50% auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 1px solid #aaa;
+
+  &.loaded {
+    background-image: none;
+    background-color: var(--main-fg-color);
+
+    &::before {
+      content: none;
+    }
+  }
+
+  &.selected {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: contain;
+    background-color: var(--main-fg-color);
+  }
+}

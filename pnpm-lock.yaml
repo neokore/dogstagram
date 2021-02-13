@@ -7,7 +7,10 @@ dependencies:
   '@types/node': 12.19.16
   '@types/react': 17.0.1
   '@types/react-dom': 17.0.0
+  '@types/react-redux': 7.1.16
   i18next: 19.8.7
+  i18next-browser-languagedetector: 6.0.1
+  i18next-http-backend: 1.1.0
   node-sass: 5.0.0
   react: 17.0.1
   react-dom: 17.0.1_react@17.0.1
@@ -18,7 +21,6 @@ dependencies:
   typescript: 4.1.5
   web-vitals: 1.1.0
 devDependencies:
-  '@types/react-redux': 7.1.16
   prettier: 2.2.1
 lockfileVersion: 5.2
 packages:
@@ -1926,7 +1928,6 @@ packages:
     dependencies:
       '@types/react': 17.0.2
       hoist-non-react-statics: 3.3.2
-    dev: true
     resolution:
       integrity: sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==
   /@types/html-minifier-terser/5.1.1:
@@ -1985,6 +1986,7 @@ packages:
     resolution:
       integrity: sha512-O3SQC6+6AySHwrspYn2UvC6tjo6jCTMMmylxZUFhE1CulVu5l3AxU6ca9lrJDTQDVllF62LIxVSx5fuYL6LiZg==
   /@types/prop-types/15.7.3:
+    dev: false
     resolution:
       integrity: sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
   /@types/q/1.5.4:
@@ -2003,7 +2005,7 @@ packages:
       '@types/react': 17.0.2
       hoist-non-react-statics: 3.3.2
       redux: 4.0.5
-    dev: true
+    dev: false
     resolution:
       integrity: sha512-f/FKzIrZwZk7YEO9E1yoxIuDNRiDducxkFlkw/GNMGEnK9n4K8wJzlJBghpSuOVDgEUHoDkDF7Gi9lHNQR4siw==
   /@types/react/17.0.1:
@@ -2017,7 +2019,6 @@ packages:
     dependencies:
       '@types/prop-types': 15.7.3
       csstype: 3.0.6
-    dev: true
     resolution:
       integrity: sha512-Xt40xQsrkdvjn1EyWe1Bc0dJLcil/9x2vAuW7ya+PuQip4UYUaXyhzWmAbwRsdMgwOFHpfp7/FFZebDU6Y8VHA==
   /@types/resolve/0.0.8:
@@ -4199,6 +4200,7 @@ packages:
     resolution:
       integrity: sha512-AZL67abkUzIuvcHqk7c09cezpGNcxUxU4Ioi/05xHk4DQeTkWmGYftIE6ctU6AEt+Gn4n1lDStOtj7FKycP71A==
   /csstype/3.0.6:
+    dev: false
     resolution:
       integrity: sha512-+ZAmfyWMT7TiIlzdqJgjMb7S4f1beorDbWbsocyK4RaiqA5RTX3K14bnBWmmA9QEM0gRdsjyyrEmcyga8Zsxmw==
   /currently-unhandled/0.4.1:
@@ -6021,6 +6023,7 @@ packages:
   /hoist-non-react-statics/3.3.2:
     dependencies:
       react-is: 16.13.1
+    dev: false
     resolution:
       integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
   /hoopy/0.1.4:
@@ -6210,6 +6213,18 @@ packages:
       node: '>=8.12.0'
     resolution:
       integrity: sha512-SEQu7vl8KjNL2eoGBLF3+wAjpsNfA9XMlXAYj/3EdaNfAlxKthD1xjEQfGOUhllCGGJVNY34bRr6lPINhNjyZw==
+  /i18next-browser-languagedetector/6.0.1:
+    dependencies:
+      '@babel/runtime': 7.12.13
+    dev: false
+    resolution:
+      integrity: sha512-3H+OsNQn3FciomUU0d4zPFHsvJv4X66lBelXk9hnIDYDsveIgT7dWZ3/VvcSlpKk9lvCK770blRZ/CwHMXZqWw==
+  /i18next-http-backend/1.1.0:
+    dependencies:
+      node-fetch: 2.6.1
+    dev: false
+    resolution:
+      integrity: sha512-utp3MyUQpIUD5Jxkf5xz0GWYWDSte7uuf1F4qaLtVtIqlcFcyYQ2l22el1JPK3rAL44+sjhB7+ct0Qr2WpbxNA==
   /i18next/19.8.7:
     dependencies:
       '@babel/runtime': 7.12.13
@@ -7364,6 +7379,7 @@ packages:
     resolution:
       integrity: sha512-pZe//GGmwJndub7ZghVHz7vjb2LgC1m8B07Au3eYqeqv9emhESByMXxaEgkUkEqJe87oBbSniGYoQNIBklc7IQ==
   /js-tokens/4.0.0:
+    dev: false
     resolution:
       integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==
   /js-yaml/3.14.1:
@@ -7726,6 +7742,7 @@ packages:
   /loose-envify/1.4.0:
     dependencies:
       js-tokens: 4.0.0
+    dev: false
     hasBin: true
     resolution:
       integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==
@@ -8184,6 +8201,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-fgAN3jGAh+RoxUGZHTSOLJIqUc2wmoBwGR4tbpNAKmmovFoWq0OdRkb0VkldReO2a2iBT/OEulG9XSUc10r3zg==
+  /node-fetch/2.6.1:
+    dev: false
+    engines:
+      node: 4.x || >=6.0.0
+    resolution:
+      integrity: sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
   /node-forge/0.10.0:
     dev: false
     engines:
@@ -10007,6 +10030,7 @@ packages:
     resolution:
       integrity: sha512-Nr4Fq7BvzDLJQmaDyJRkPPINgMW1Y1qeT4STBoY/ePGmYlCZGShTYqqyBm0ly6M8dV1X0twt7M5dfmDzfi9yGQ==
   /react-is/16.13.1:
+    dev: false
     resolution:
       integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
   /react-is/17.0.1:
@@ -10261,6 +10285,7 @@ packages:
     dependencies:
       loose-envify: 1.4.0
       symbol-observable: 1.2.0
+    dev: false
     resolution:
       integrity: sha512-VSz1uMAH24DM6MF72vcojpYPtrTUu3ByVWfPL1nPfVRb5mZVTve5GnNCUV53QM/BZ66xfWrm0CTWoM+Xlz8V1w==
   /regenerate-unicode-properties/8.2.0:
@@ -11542,6 +11567,7 @@ packages:
     resolution:
       integrity: sha512-yhy/sQYxR5BkC98CY7o31VGsg014AKLEPxdfhora76l36hD9Rdy5NZA/Ocn6yayNPgSamYdtX2rFJdcv07AYVw==
   /symbol-observable/1.2.0:
+    dev: false
     engines:
       node: '>=0.10.0'
     resolution:
@@ -12774,6 +12800,8 @@ specifiers:
   '@types/react-dom': ^17.0.0
   '@types/react-redux': ^7.1.16
   i18next: ^19.8.7
+  i18next-browser-languagedetector: ^6.0.1
+  i18next-http-backend: ^1.1.0
   node-sass: ^5.0.0
   prettier: ^2.2.1
   react: ^17.0.1
