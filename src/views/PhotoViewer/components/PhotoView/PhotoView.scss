@@ -19,5 +19,18 @@
     height: 100vh;
     object-fit: contain;
     background-color: var(--main-fg-color);
+    z-index: 0;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 2em;
+      height: 2em;
+      background: url('/assets/icons/close.svg') center center no-repeat;
+      background-size: contain;
+      position: absolute;
+      top: 16px;
+      right: 16px;
+    }
   }
 }

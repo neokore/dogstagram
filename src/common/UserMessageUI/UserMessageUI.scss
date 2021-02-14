@@ -13,8 +13,8 @@
 
   button {
     flex: 0 0 auto;
-    height: 1em;
-    width: 1em;
+    height: 1.5em;
+    width: 1.5em;
     padding: 0;
     border: none;
     border-radius: 50%;
@@ -22,10 +22,16 @@
     color: var(--main-fg-color);
     font-weight: bold;
     cursor: pointer;
+
+    .icon {
+      padding: 0;
+      height: 100%;
+    }
   }
 
   p {
     flex: 1 1 auto;
+    margin: 0
   }
 
   .icon {

@@ -3,8 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'state/rootReducer';
 import { clearUserMessage, UserMessageType } from 'state/slices/userMessageSlice';
 import './UserMessageUI.scss';
-import { ReactComponent as InfoIcon } from './info.svg';
-import { ReactComponent as ErrorIcon } from './error.svg';
+import { ReactComponent as InfoIcon } from 'assets/icons/info.svg';
+import { ReactComponent as ErrorIcon } from 'assets/icons/error.svg';
+import { ReactComponent as CloseIcon } from 'assets/icons/close.svg';
 
 export default function UserMessageUI () {
   const {
@@ -41,7 +42,7 @@ export default function UserMessageUI () {
     <div className="UserMessage">
       {getMessageIcon()}
       <p>{message}</p>
-      <button onClick={handleClose}>X</button>
+      { type === UserMessageType.error && <button onClick={handleClose}><CloseIcon className="icon" /></button>}
     </div>
   );
 }

@@ -2,7 +2,7 @@
   padding: 5vmin 5vmin 0;
   border-radius: 2vmin;
   margin: 2.5vmin 5vmin;
-  flex: 1 1 auto;
+  flex: 1 1 100%;
   
   background-color: var(--main-fg-color);
   color: var(--main-bg-color);
@@ -50,6 +50,7 @@
 
 @media (min-width: 900px) {
   .PhotoSlide {
+    margin: 2.5vmin 5vmin 2.5vmin;
     align-self: stretch;
     max-width: 100vh;
     transition: max-width ease-in-out 1s .25s,
@@ -58,6 +59,7 @@
 
     &:empty {
       max-width: 0;
+      max-height: 100%;
       padding: 0;
       margin: 0;
       transition: max-width ease-in-out .5s,

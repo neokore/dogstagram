@@ -70,7 +70,6 @@ export const fetchBreedList = (): AppThunk => async (dispatch) => {
     dispatch(clearUserMessage());
     const breeds = await getBreedList();
     dispatch(fetchBreedListSuccess(breeds));
-    dispatch(setUserMessage({type: UserMessageType.info, message: `Loaded ${breeds.length} breeds`} as UserMessage));
   } catch (err) {
     dispatch(fetchBreedListFailure());
     dispatch(setUserMessage({type: UserMessageType.error, message: err.message} as UserMessage));
@@ -84,7 +83,6 @@ export const selectBreed = (breedId: string): AppThunk => async (dispatch) => {
     dispatch(clearUserMessage());
     const photoList = await getBreedPhotoList(breedId);
     dispatch(fetchBreedPhotoListSuccess(photoList));
-    dispatch(setUserMessage({type: UserMessageType.info, message: `Loaded ${photoList.length} photos`} as UserMessage));
   } catch (err) {
     dispatch(fetchBreedPhotoListFailure());
     dispatch(setUserMessage({type: UserMessageType.error, message: err.message} as UserMessage));

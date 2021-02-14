@@ -4,5 +4,8 @@
     "none": "None",
     "errorBreed": "Wrong breed",
     "loading": "Loading"
+  },
+  "PhotoView": {
+    "tapToClose": "Tap again on the image to close it"
   }
 }

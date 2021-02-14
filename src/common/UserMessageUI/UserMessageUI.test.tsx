@@ -37,6 +37,8 @@ test('shows info message style', () => {
   expect(messageElement).toBeInTheDocument();
   const iconElement = document.querySelector('.icon.info');
   expect(iconElement).toBeInTheDocument();
+  const buttonElement = document.querySelector('button');
+  expect(buttonElement).toBeNull();
 });
 
 test('shows error message style', () => {
@@ -56,4 +58,6 @@ test('shows error message style', () => {
   expect(messageElement).toBeInTheDocument();
   const iconElement = document.querySelector('.icon.error');
   expect(iconElement).toBeInTheDocument();
+  const buttonElement = document.querySelector('button');
+  expect(buttonElement).toBeInTheDocument();
 });

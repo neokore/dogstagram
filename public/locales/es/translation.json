@@ -4,5 +4,8 @@
     "none": "Ninguna",
     "errorBreed": "Raza errónea",
     "loading": "Cargando"
+  },
+  "PhotoView": {
+    "tapToClose": "Toca en la imagen de nuevo para cerrarla"
   }
 }
