@@ -1,46 +1,68 @@
-# Getting Started with Create React App
+# Dogstagram!
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## ¿Qué es Dogstagram?
+Dogstagram es la aplicación para la prueba de [atSistemas](https://atsistemas.com). Se trata de una aplicación web para mostrar fotografías de distintas razas de perro.
 
-## Available Scripts
 
-In the project directory, you can run:
+## Tecnologías
+La aplicación está realizada usando React con Redux escrita en TypeScript. Las principales librerías usadas son:
+  - TypeScript
+  - React
+  - Redux
+  - Redux Toolkit
+  - Redux Thunk
+  - React Scripts
+  - i18next
+  - SASS
+  - Jest
+  - Testing library
 
-### `yarn start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Características
+Se ha realizado la aplicación teniendo en cuenta los requerimientos de la prueba que son:
+  - Mostrar un combo-box que permita seleccionar una raza concreta de perro.
+  - Usar el servicio de [dog.ceo](https://dog.ceo) para obtener la [lista de razas](https://dog.ceo/api/breeds/list/all) y la [lista de fotografías de cada raza](https://dog.ceo/api/breed/<raza>/images).
+  - Recomendación de uso de hooks.
+  - Recomendación de muestra de feedback al usuario acerca de estados de carga y errores.
+  - Recomendación de uso de herramientas de gestión de estados como Redux.
+  - Recomendación de soporte multiidioma.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Y además se han agregado otras características como:
+  - Responsive con diseño mobile first inspirado ligeramente en el neomorfismo.
+  - Muestra de fotografías en pantalla completa
+  - Paneles informativos de ayuda al usuario
+  - Detección de idioma del navegador y carga de locales bajo demanda
+  - Tests de componentes
 
-### `yarn test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
+## Organización de ficheros
+Aunque la aplicación es pequeña se han organizado los ficheros de forma que puedan albergar mejoras y ampliaciones sin problemas e intentando que la estructura sea fácilmente comprensible para desarrolladores junior.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+La organización se basa en la separación vista/estado, de ahí la carpeta `state` para albergar la configuración del estado y los slices y la carpeta `views` donde situar las distintas vistas principales o secciones de la aplicación (actualmente sólo una).
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Posteriormente se tienen carpetas para distintos objetivos como `app` para encapsular lo relativo al componente principal o shell; `api` para guardar lo relativo a acceso a APIs externas, `assets` para recursos generales necesarios dentro de la app como imágenes, `common` para los componentes generales o que se usen exclusivamente en `app` e `i18n` donde se encuentra la configuración de traducciones.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Dentro de la carpeta de cada vista principal encontramos otra carpeta llamada `components` para incluir los subcomponentes necesarios para cada vista. Aquí se intenta seguir una filosofía estilo _Atomic Design_ sin llegar al extremo, pero teniendo mucho ojo con la eficiencia en componentes evitando marcar como _dirty_ componentes que no lo requieren por tener dependencias que no necesitan. En este aspecto Redux es un buen aliado. También se incluyen los ficheros de tests de cada componente junto con la implementación del mismo.
 
-### `yarn eject`
+Finalmente algunos recursos quedan en `public` fuera de `src`, como por ejemplo los ficheros de las claves de traducción. Esto se debe a que por experiencia los ficheros de traducción cuando son a muchos idiomas lastran por tamaño el resto de la aplicación, por lo que prefiero que se descarguen bajo demanda cuando se ha detectado el idioma del navegador. Aún así, es posible cargarlos desde dentro moviendo la carpeta `locales` a `i18n` y actualizando la configuración.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Detalles a tener en cuenta
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Acoplamiento en _slices_
+En el caso de `BreedSlice` tenemos una dependencia de `UserMessageSlice` para poder lanzar mensajes al usuario. Sé que otros desarrolladores usan llamadas clásicas de _dispatch_ por nombre para evitarlo, pero realmente usando Redux Toolkit no creo que en casos tan controlados como este perteneciéndo ambos al _core_ de la aplicación sea necesario.
+De hecho harán que en caso de problemas el error salte antes.
+Aún así, en casos en los que los _slices_ pertenecieran a distintos módulos, eligiría otra solución, ya fueran llamadas clásicas u otra.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Testing
+He agregado la estructura necesaria para poder usar tests con Jest y Testing library usando Redux Toolkit y TypeScript junto con i18next. Las modificaciones están en `setupTests.ts` para saltarnos la descarga de locales para los tests y en `test-utils.js` donde sobrecargamos la función `render` de Testing Library para poder envolver nuestros componentes e inyectar nuestros estados personalizados con los _reducers_ reales.
+El caso de `test-utils.js` no es un error, se usa código JS, por lo que llamarlo `.ts` no me parecía útil, aunque se podría tipar si se viera necesario.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Mejoras
+Algunas mejoras que se pueden aplicar a la aplicación y que no se han hecho por no complicarlo en exceso la prueba son:
+  - Inclusión de un router para cargar la raza desde URL en caso de carga inicial. React-router v6 con los nuevos Hooks son un buen juguete para ello, aunque aún se encuentra en beta.
+  - Inclusión de un service worker para controlar la caché de las distintas peticiones. Aunque no requiere mucho trabajo hacerlo manualmente, he visto Workbox de Google que facilita todavía más el trabajo.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
