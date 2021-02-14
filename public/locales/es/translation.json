@@ -2,6 +2,7 @@
   "breedSelector": {
     "label": "Selecciona una raza",
     "none": "Ninguna",
-    "errorBreed": "Raza errónea"
+    "errorBreed": "Raza errónea",
+    "loading": "Cargando"
   }
 }

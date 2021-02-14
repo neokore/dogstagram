@@ -1,4 +1,5 @@
 .BreedSelector {
+  position: relative;
   flex: 1 0 auto;
   display: flex;
   flex-direction: column;
@@ -32,5 +33,30 @@
     &, option {
       text-transform: capitalize;
     }
+  }
+}
+
+.LoadingImagesMsg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2vmin;
+  background-color: rgba(0,0,0,.8);
+  color: var(--main-fg-color);
+
+  img {
+    animation: fadingInOut 2s infinite alternate;
+  }
+}
+
+@keyframes fadingInOut {
+  from {
+    opacity: 0.1;
   }
 }

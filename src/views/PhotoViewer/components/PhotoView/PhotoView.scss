@@ -1,6 +1,6 @@
 .PhotoView {
   object-fit: cover;
-  background-image: url('./loading.png');
+  background-image: url('/assets/img/loading.png');
   background-size: 50% auto;
   background-position: center;
   background-repeat: no-repeat;
@@ -9,10 +9,6 @@
   &.loaded {
     background-image: none;
     background-color: var(--main-fg-color);
-
-    &::before {
-      content: none;
-    }
   }
 
   &.selected {

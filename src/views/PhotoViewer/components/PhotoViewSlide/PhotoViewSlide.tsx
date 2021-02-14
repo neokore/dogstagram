@@ -12,8 +12,12 @@ export default function PhotoSlide() {
   return (
     <div className="PhotoSlide">
       {
-        breedPhotoList && breedPhotoList.map((photoUrl: string, index: number) =>
-          <PhotoView key={index} imageUrl={photoUrl} />
+        breedPhotoList.length > 0 && (
+          <div className="grid">
+            { breedPhotoList.map((photoUrl: string, index: number) =>
+              <PhotoView key={index} imageUrl={photoUrl} />
+            )}
+          </div>
         )
       }
     </div>

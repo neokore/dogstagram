@@ -7,7 +7,7 @@ export default function PhotoView(props: { imageUrl: string }) {
   const [isSelected, setSelected] = useState(false);
   const [hasLoaded, setLoaded] = useState(false);
 
-  const handleClick = () => setSelected(!isSelected);
+  const handleClick = () => hasLoaded && setSelected(!isSelected);
   const handleLoad = () => setLoaded(true);
 
   return (

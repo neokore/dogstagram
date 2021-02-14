@@ -5,6 +5,7 @@ import { RootState } from 'state/rootReducer';
 import { fetchBreedList, selectBreed } from 'state/slices/breedSlice';
 import { Breed } from 'api/dogApi';
 import './BreedSelector.scss';
+import LoadingImg from 'assets/img/loading.png';
 
 export default function BreedSelector() {
   const { t } = useTranslation();
@@ -38,6 +39,23 @@ export default function BreedSelector() {
           return <option key={breed.id} value={breed.id}>{breed.name}</option>
         })}
       </select>
+      <LoadingImagesMsg />
     </div>
   );
 };
+
+function LoadingImagesMsg() {
+  const { t } = useTranslation();
+  const {
+    isLoading
+  } = useSelector((state: RootState) => state.breeds);
+
+  if (!isLoading) return null;
+
+  return (
+    <div className="LoadingImagesMsg">
+      <img src={LoadingImg} />
+      <p>{t('breedSelector.loading')}</p>
+    </div>
+  );
+}

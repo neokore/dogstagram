@@ -1,24 +1,25 @@
 .PhotoSlide {
-  display: grid;
-  grid-template-columns: 50% 50%;
-  grid-auto-rows: 20vmax;
-  justify-items: stretch;
-  align-items: stretch;
-  gap: 10px 10px;
-  padding: 5vmin;
+  padding: 5vmin 5vmin 0;
   border-radius: 2vmin;
   margin: 2.5vmin 5vmin;
   flex: 1 1 auto;
-  overflow-y: auto;
+  
   background-color: var(--main-fg-color);
   color: var(--main-bg-color);
   max-height: 100vh;
   box-shadow: inset 2vmin 2vmin 4vmin #bebebe,
             inset -2vmin -2vmin 4vmin #ffffff;
-
   transition: max-height ease-in-out 1s .25s,
               padding ease-in-out .25s,
               margin linear 0s;
+  overflow-y: auto;
+
+  // Workaround for bottom padding bug when using grid and scroll
+  &::after {
+    content: '';
+    display: block;
+    height: 5vmin;
+  }
 
   &:empty {
     max-height: 0;
@@ -27,6 +28,23 @@
     transition: max-height ease-in-out .5s,
                 padding ease-in-out .25s .5s,
                 margin linear 0s .75s;
+    
+    &::after {
+      display: none;
+    }
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-auto-rows: 20vmax;
+    justify-items: stretch;
+    align-items: stretch;
+    gap: 10px 10px;
+
+    &:empty {
+      display: none;
+    }
   }
 }
 
