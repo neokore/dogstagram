@@ -16,7 +16,7 @@ export default function BreedSelector() {
   } = useSelector((state: RootState) => state.breeds);
 
   useEffect(() => {
-    dispatch(fetchBreedList())
+    if (!breedList.length) dispatch(fetchBreedList());
   }, [dispatch]);
 
   const handleBreedSelected = (breedId: string) => {

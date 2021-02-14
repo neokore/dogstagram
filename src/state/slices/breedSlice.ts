@@ -3,7 +3,7 @@ import { Breed, getBreedList, getBreedPhotoList } from 'api/dogApi';
 import { AppThunk } from 'state/store';
 import { UserMessage, UserMessageType, clearUserMessage, setUserMessage } from './userMessageSlice';
 
-interface BreedState {
+export interface BreedState {
   isLoading: boolean,
   breedList: Breed[], // {id: "breed/subbreed", name: "breed (subbreed)"}
   selectedBreed?: string | null, // id from breedList
@@ -70,6 +70,7 @@ export const fetchBreedList = (): AppThunk => async (dispatch) => {
     dispatch(clearUserMessage());
     const breeds = await getBreedList();
     dispatch(fetchBreedListSuccess(breeds));
+    dispatch(setUserMessage({type: UserMessageType.info, message: `Loaded ${breeds.length} breeds`} as UserMessage));
   } catch (err) {
     dispatch(fetchBreedListFailure());
     dispatch(setUserMessage({type: UserMessageType.error, message: err.message} as UserMessage));
@@ -83,6 +84,7 @@ export const selectBreed = (breedId: string): AppThunk => async (dispatch) => {
     dispatch(clearUserMessage());
     const photoList = await getBreedPhotoList(breedId);
     dispatch(fetchBreedPhotoListSuccess(photoList));
+    dispatch(setUserMessage({type: UserMessageType.info, message: `Loaded ${photoList.length} photos`} as UserMessage));
   } catch (err) {
     dispatch(fetchBreedPhotoListFailure());
     dispatch(setUserMessage({type: UserMessageType.error, message: err.message} as UserMessage));

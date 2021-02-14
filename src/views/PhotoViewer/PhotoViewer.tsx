@@ -6,7 +6,6 @@ import './PhotoViewer.scss';
 
 export default function PhotoViewer() {
   
-
   return (
     <div className="PhotoViewer">
       <BreedSelector />
