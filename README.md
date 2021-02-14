@@ -31,6 +31,7 @@ Y además se han agregado otras características como:
   - Responsive con diseño mobile first inspirado ligeramente en el neomorfismo.
   - Uso de SASS para facilitar la escritura de CSS y animaciones y transiciones CSS nativas para conseguir la máxima fluidez.
   - Muestra de fotografías en pantalla completa.
+  - Carga de fotografías bajo demanda con lazy loading.
   - Paneles informativos de ayuda al usuario.
   - Detección de idioma del navegador y carga de locales bajo demanda.
   - Tests de componentes.
