@@ -1,4 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  fetchBreedList,
+  selectBreed,
+} from 'state/slices/breedSlice';
 
 export enum UserMessageType {
   error = "ERROR",
@@ -28,6 +32,15 @@ const userMessageSlice = createSlice({
       state.type = null;
       state.message = null;
     }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchBreedList, (state) => {
+        userMessageSlice.caseReducers.clearUserMessage(state);
+      })
+      .addCase(selectBreed, (state) => {
+        userMessageSlice.caseReducers.clearUserMessage(state);
+      })
   }
 });
 

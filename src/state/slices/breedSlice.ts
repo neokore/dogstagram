@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Breed, getBreedList, getBreedPhotoList } from 'api/dogApi';
-import { AppThunk } from 'state/store';
-import { UserMessage, UserMessageType, clearUserMessage, setUserMessage } from './userMessageSlice';
+import { Breed } from 'api/dogApi';
 
 export interface BreedState {
   isLoading: boolean,
@@ -21,7 +19,7 @@ const breedSlice = createSlice({
   name: 'breed',
   initialState,
   reducers: {
-    fetchBreedListStart: (state) => {
+    fetchBreedList: (state) => {
       state.isLoading = true;
       state.breedList = [];
       state.breedPhotoList = [];
@@ -34,10 +32,8 @@ const breedSlice = createSlice({
       state.isLoading = false;
       state.breedList = [];
     },
-    setSelectedBreed: (state, action: PayloadAction<string>) => {
+    selectBreed: (state, action: PayloadAction<string>) => {
       state.selectedBreed = action.payload;
-    },
-    fetchBreedPhotoListStart: (state) => {
       state.isLoading = true;
       state.breedPhotoList = [];
     },
@@ -55,36 +51,10 @@ const breedSlice = createSlice({
 export default breedSlice.reducer;
 
 export const { 
-  fetchBreedListStart,
+  fetchBreedList,
   fetchBreedListSuccess,
   fetchBreedListFailure,
-  setSelectedBreed,
-  fetchBreedPhotoListStart,
+  selectBreed,
   fetchBreedPhotoListSuccess,
   fetchBreedPhotoListFailure
 } = breedSlice.actions;
-
-export const fetchBreedList = (): AppThunk => async (dispatch) => {
-  try {
-    dispatch(fetchBreedListStart());
-    dispatch(clearUserMessage());
-    const breeds = await getBreedList();
-    dispatch(fetchBreedListSuccess(breeds));
-  } catch (err) {
-    dispatch(fetchBreedListFailure());
-    dispatch(setUserMessage({type: UserMessageType.error, message: err.message} as UserMessage));
-  }
-};
-
-export const selectBreed = (breedId: string): AppThunk => async (dispatch) => {
-  try {
-    dispatch(setSelectedBreed(breedId));
-    dispatch(fetchBreedPhotoListStart());
-    dispatch(clearUserMessage());
-    const photoList = await getBreedPhotoList(breedId);
-    dispatch(fetchBreedPhotoListSuccess(photoList));
-  } catch (err) {
-    dispatch(fetchBreedPhotoListFailure());
-    dispatch(setUserMessage({type: UserMessageType.error, message: err.message} as UserMessage));
-  }
-};
