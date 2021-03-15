@@ -11,7 +11,7 @@ La aplicación está realizada usando React con Redux escrita en TypeScript. Las
   * React
   * Redux
   * Redux Toolkit
-  * Redux Sagas
+  * Redux Observable
   * React Scripts
   * i18next
   * SASS

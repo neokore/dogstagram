@@ -1,16 +1,22 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import rootReducer from './rootReducer';
-import createSagaMiddleware from "redux-saga";
-import breedSaga from 'state/sagas/breedSaga';
+import { combineEpics, createEpicMiddleware }  from "redux-observable";
+import breedEpic from 'state/epics/breedEpic';
 
-let sagaMiddleware = createSagaMiddleware();
-const middleware = [...getDefaultMiddleware({ thunk: false }), sagaMiddleware];
+const rootEpic = combineEpics(
+  breedEpic
+);
+
+const epicMiddleware = createEpicMiddleware();
+const middleware = [...getDefaultMiddleware({ thunk: false }), epicMiddleware];
 
 const store = configureStore({
   reducer: rootReducer,
   middleware
 });
 
-sagaMiddleware.run(breedSaga);
+// TODO: Type it right
+epicMiddleware.run(rootEpic as any);
+
 
 export default store;
