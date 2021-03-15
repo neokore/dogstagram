@@ -6,35 +6,38 @@ Dogstagram es la aplicación para la prueba de [atSistemas](https://atsistemas.c
 
 ## Tecnologías
 La aplicación está realizada usando React con Redux escrita en TypeScript. Las principales librerías usadas son:
-  - TypeScript
-  - React
-  - Redux
-  - Redux Toolkit
-  - Redux Thunk
-  - React Scripts
-  - i18next
-  - SASS
-  - Jest
-  - Testing library
+
+  * TypeScript
+  * React
+  * Redux
+  * Redux Toolkit
+  * Redux Thunk
+  * React Scripts
+  * i18next
+  * SASS
+  * Jest
+  * Testing library
 
 
 ## Características
 Se ha realizado la aplicación teniendo en cuenta los requerimientos de la prueba que son:
-  - Mostrar un combo-box que permita seleccionar una raza concreta de perro.
-  - Usar el servicio de [dog.ceo](https://dog.ceo) para obtener la [lista de razas](https://dog.ceo/api/breeds/list/all) y la [lista de fotografías de cada raza](https://dog.ceo/api/breed/<raza>/images).
-  - Recomendación de uso de hooks.
-  - Recomendación de muestra de feedback al usuario acerca de estados de carga y errores.
-  - Recomendación de uso de herramientas de gestión de estados como Redux.
-  - Recomendación de soporte multiidioma.
+
+  * Mostrar un combo-box que permita seleccionar una raza concreta de perro.
+  * Usar el servicio de [dog.ceo](https://dog.ceo) para obtener la [lista de razas](https://dog.ceo/api/breeds/list/all) y la [lista de fotografías de cada raza](https://dog.ceo/api/breed/<raza>/images).
+  * Recomendación de uso de hooks.
+  * Recomendación de muestra de feedback al usuario acerca de estados de carga y errores.
+  * Recomendación de uso de herramientas de gestión de estados como Redux.
+  * Recomendación de soporte multiidioma.
 
 Y además se han agregado otras características como:
-  - Responsive con diseño mobile first inspirado ligeramente en el neomorfismo.
-  - Uso de SASS para facilitar la escritura de CSS y animaciones y transiciones CSS nativas para conseguir la máxima fluidez.
-  - Muestra de fotografías en pantalla completa.
-  - Carga de fotografías bajo demanda con lazy loading.
-  - Paneles informativos de ayuda al usuario.
-  - Detección de idioma del navegador y carga de locales bajo demanda.
-  - Tests de componentes.
+
+  * Responsive con diseño mobile first inspirado ligeramente en el neomorfismo.
+  * Uso de SASS para facilitar la escritura de CSS y animaciones y transiciones CSS nativas para conseguir la máxima fluidez.
+  * Muestra de fotografías en pantalla completa.
+  * Carga de fotografías bajo demanda con lazy loading.
+  * Paneles informativos de ayuda al usuario.
+  * Detección de idioma del navegador y carga de locales bajo demanda.
+  * Tests de componentes.
 
 
 
@@ -68,8 +71,9 @@ Aunque vaya por delante que no soy diseñador, sí que me gusta serlo para mis p
 
 ## Mejoras
 Algunas mejoras que se pueden aplicar a la aplicación y que no se han hecho por no complicarlo en exceso la prueba son:
-  - Inclusión de un router para cargar la raza desde URL en caso de carga inicial. React-router v6 con los nuevos Hooks son un buen juguete para ello, aunque aún se encuentra en beta.
-  - Inclusión de un service worker para controlar la caché de las distintas peticiones. Aunque no requiere mucho trabajo hacerlo manualmente, he visto Workbox de Google que facilita todavía más el trabajo.
-  - Inclusión de estados de componente para animaciones CSS, de esa forma las transiciones de estado y la aparición y desaparición de mensajes sería más suave.
+
+  * Inclusión de un router para cargar la raza desde URL en caso de carga inicial. React-router v6 con los nuevos Hooks son un buen juguete para ello, aunque aún se encuentra en beta.
+  * Inclusión de un service worker para controlar la caché de las distintas peticiones. Aunque no requiere mucho trabajo hacerlo manualmente, he visto Workbox de Google que facilita todavía más el trabajo.
+  * Inclusión de estados de componente para animaciones CSS, de esa forma las transiciones de estado y la aparición y desaparición de mensajes sería más suave.
 
 ---
