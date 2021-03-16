@@ -1,61 +1,57 @@
-import { Epic, combineEpics, ofType } from 'redux-observable'
+import { combineEpics } from 'redux-observable'
 import { from, of } from 'rxjs';
-import { filter, map, mergeMap, catchError } from 'rxjs/operators'
-import { ActionType, isActionOf } from "typesafe-actions";
-import * as API from 'api/dogApi';
-import { RootState } from 'state/rootReducer';
-import * as actions from 'state/slices/breedSlice';
+import { filter, map, exhaustMap, catchError } from 'rxjs/operators'
+import { EpicType } from './';
+
+import {
+  fetchBreedList,
+  fetchBreedListSuccess,
+  fetchBreedListFailure,
+  selectBreed,
+  fetchBreedPhotoListSuccess,
+  fetchBreedPhotoListFailure
+} from 'state/slices/breedSlice';
 import {
   UserMessage,
   UserMessageType,
   setUserMessage
 } from 'state/slices/userMessageSlice';
 
-type ActionsType = ActionType<typeof actions>;
-
-const fetchBreedListEpic: Epic<
-ActionsType,
-ActionsType,
-RootState,
-typeof API
-> = (action$, store, { getBreedList }) => {
+const fetchBreedListEpic: EpicType = (action$, store, { getBreedList }) =>
   action$.pipe(
-    filter(isActionOf(actions.fetchBreedList)),
-    mergeMap(action => {
+    filter(fetchBreedList.match),
+    exhaustMap(action => {
       return from(getBreedList()).pipe(
-        map(actions.fetchBreedListSuccess),
+        map(fetchBreedListSuccess),
         catchError((e) => {
-          // const message: UserMessage = {type: UserMessageType.error, message: e.message};
-          // setUserMessage(message)
-          return of(actions.fetchBreedListFailure())
+          const message: UserMessage = {type: UserMessageType.error, message: e.message};
+          return of(
+            fetchBreedListFailure(),
+            setUserMessage(message)
+          );
         })
       );
     })
-  );
-}; 
+  ); 
 
-const selectBreedEpic: Epic<
-ActionsType,
-ActionsType,
-RootState,
-typeof API
-> = (action$, store, { getBreedPhotoList }) => {
+const selectBreedEpic: EpicType = (action$, store, { getBreedPhotoList }) =>
   action$.pipe(
-    filter(isActionOf(actions.selectBreed)),
-    mergeMap(({payload}: {payload: string}) => 
+    filter(selectBreed.match),
+    exhaustMap(({payload}: {payload: string}) => 
       from(getBreedPhotoList(payload)).pipe(
-        map(actions.fetchBreedPhotoListSuccess),
+        map(fetchBreedPhotoListSuccess),
         catchError((e) => {
-          // const message: UserMessage = {type: UserMessageType.error, message: e.message};
-          // setUserMessage(message)
-          return of(actions.fetchBreedPhotoListFailure());
+          const message: UserMessage = {type: UserMessageType.error, message: e.message};
+          return of(
+            fetchBreedPhotoListFailure(),
+            setUserMessage(message)
+          );
         })
       )
     )
-  )
-};
+  );
 
-export default combineEpics([
+export default combineEpics(
   fetchBreedListEpic,
   selectBreedEpic
-]);
+);

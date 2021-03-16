@@ -1,13 +1,13 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import rootReducer from './rootReducer';
-import { combineEpics, createEpicMiddleware }  from "redux-observable";
-import breedEpic from 'state/epics/breedEpic';
+import rootReducer, { RootState } from './rootReducer';
+import { createEpicMiddleware }  from "redux-observable";
+import { ActionsType } from './slices';
+import rootEpic from './epics';
+import * as API from 'api/dogApi';
 
-const rootEpic = combineEpics(
-  breedEpic
-);
-
-const epicMiddleware = createEpicMiddleware();
+const epicMiddleware = createEpicMiddleware<ActionsType, ActionsType, RootState>({
+  dependencies: API,
+});
 const middleware = [...getDefaultMiddleware({ thunk: false }), epicMiddleware];
 
 const store = configureStore({
@@ -15,8 +15,7 @@ const store = configureStore({
   middleware
 });
 
-// TODO: Type it right
-epicMiddleware.run(rootEpic as any);
+epicMiddleware.run(rootEpic);
 
 
 export default store;
