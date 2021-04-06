@@ -1,10 +1,16 @@
-import { configureStore, Action } from '@reduxjs/toolkit';
-import { ThunkAction } from 'redux-thunk';
-import rootReducer, { RootState } from './rootReducer';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { createLogicMiddleware } from 'redux-logic';
+import rootReducer from './rootReducer';
+import logic from './logic';
+
+const logicMiddleware = createLogicMiddleware(logic);
+
+const middleware = [...getDefaultMiddleware({ thunk: false }), logicMiddleware];
 
 const store = configureStore({
-  reducer: rootReducer
+  reducer: rootReducer,
+  middleware
 });
 
-export type AppThunk = ThunkAction<void, RootState, null, Action<string>>;
+
 export default store;
