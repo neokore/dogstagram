@@ -9,8 +9,9 @@ export async function getBreedList(): Promise<Breed[]> {
   const url = `${BASE_URL}/breeds/list/all`;
   const response = await fetch(url);
   const { status, message } = await response.json();
-  if (status !== 'success')
+  if (status !== 'success') {
     throw new Error(`Error getting breeds list: ${message}`);
+  }
   const breeds = parseBreeds(message);
   return breeds;
 };
@@ -19,8 +20,9 @@ export async function getBreedPhotoList(breed: string): Promise<string[]> {
   const url = `${BASE_URL}/breed/${breed}/images`;
   const response = await fetch(url);
   const { status, message } = await response.json();
-  if (status !== 'success')
+  if (status !== 'success') {
     throw new Error(`Error getting breeds photo list: ${message}`);
+  }
   return message;
 };
 

@@ -1,20 +1,22 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useContext, useState } from 'react';
+import { useService } from '@xstate/react';
 import { useTranslation } from 'react-i18next';
-import { UserMessage, UserMessageType, setUserMessage } from 'state/slices/userMessageSlice';
+import { UserMessageProvider } from 'app/App';
+import { UserMessageEvent, UserMessageSeverity } from 'machine/userMessageMachine';
 import './PhotoView.scss';
 
 export default function PhotoView(props: { imageUrl: string }) {
   let { imageUrl } = props;
+  const service = useContext(UserMessageProvider);
+  const [, sendUserMessage] = useService(service);
   const [isSelected, setSelected] = useState(false);
   const [hasLoaded, setLoaded] = useState(false);
-  const dispatch = useDispatch();
   const { t } = useTranslation();
 
   const handleClick = () => {
     if (hasLoaded) {
       setSelected(!isSelected);
-      !isSelected && dispatch(setUserMessage({type: UserMessageType.info, message: t('PhotoView.tapToClose')} as UserMessage));
+      !isSelected && sendUserMessage(UserMessageEvent.SHOW, { severity: UserMessageSeverity.INFO, message: t('PhotoView.tapToClose') });
     }
   };
   const handleLoad = () => setLoaded(true);
@@ -26,6 +28,7 @@ export default function PhotoView(props: { imageUrl: string }) {
       loading="lazy"
       onLoad={handleLoad}
       onClick={handleClick}
+      alt=""
     />
   );
 };

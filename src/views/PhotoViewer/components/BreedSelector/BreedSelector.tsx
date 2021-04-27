@@ -1,27 +1,18 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RootState } from 'state/rootReducer';
-import { fetchBreedList, selectBreed } from 'state/slices/breedSlice';
+
 import { Breed } from 'api/dogApi';
 import './BreedSelector.scss';
 import LoadingImg from 'assets/img/loading.png';
+import { BreedProvider } from 'views/PhotoViewer/PhotoViewer';
+import { useService } from '@xstate/react';
+import { BreedContext, BreedEventType } from 'machine/breedMachine';
 
 export default function BreedSelector() {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const {
-    breedList,
-    selectedBreed
-  } = useSelector((state: RootState) => state.breeds);
-
-  useEffect(() => {
-    if (!breedList.length) dispatch(fetchBreedList());
-  }, [dispatch]);
-
-  const handleBreedSelected = (breedId: string) => {
-    dispatch(selectBreed(breedId));
-  };
+  const service = useContext(BreedProvider);
+  const [current, send] = useService(service);
+  const { breedList, selectedBreed } = current.context as BreedContext;
 
   return (
     <div className="BreedSelector">
@@ -31,30 +22,30 @@ export default function BreedSelector() {
       <select
         id="breedSelect"
         value={selectedBreed || undefined}
-        onChange={(event) => handleBreedSelected(event.currentTarget.value)}
+        onChange={(event) => send(BreedEventType.select, { name: event.currentTarget.value})}
       >
-        {!selectedBreed && (<option value={''}>{t('breedSelector.none')}</option>) }
+        {
+          !selectedBreed &&
+          (<option value={''}>{t('breedSelector.none')}</option>)
+        }
         <option value="error">{t('breedSelector.errorBreed')}</option>
         {breedList.map((breed: Breed) => {
           return <option key={breed.id} value={breed.id}>{breed.name}</option>
         })}
       </select>
-      <LoadingImagesMsg />
+      <LoadingImagesMsg show={current.matches("idle.loading")}/>
     </div>
   );
 };
 
-function LoadingImagesMsg() {
+function LoadingImagesMsg({ show }: { show: boolean; }) {
   const { t } = useTranslation();
-  const {
-    isLoading
-  } = useSelector((state: RootState) => state.breeds);
 
-  if (!isLoading) return null;
+  if (!show) return null;
 
   return (
     <div className="LoadingImagesMsg">
-      <img src={LoadingImg} />
+      <img src={LoadingImg} alt=""/>
       <p>{t('breedSelector.loading')}</p>
     </div>
   );

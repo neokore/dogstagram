@@ -1,8 +1,6 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
 
-import store from 'state/store';
 import Loading from 'common/Loading/Loading';
 import App from 'app/App';
 
@@ -12,11 +10,9 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <Suspense fallback={<Loading />}>
-        <App />
-      </Suspense>
-    </Provider>
+    <Suspense fallback={<Loading />}>
+      <App />
+    </Suspense>
   </React.StrictMode>,
   document.getElementById('root')
 );

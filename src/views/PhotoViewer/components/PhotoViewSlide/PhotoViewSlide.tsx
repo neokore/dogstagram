@@ -1,13 +1,13 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from 'state/rootReducer';
+import React, { useContext } from 'react';
+import { useService } from '@xstate/react';
 import PhotoView from '../PhotoView/PhotoView';
 import './PhotoViewSlide.scss';
+import { BreedProvider } from 'views/PhotoViewer/PhotoViewer';
 
 export default function PhotoSlide() {
-  const {
-    breedPhotoList
-  } = useSelector((state: RootState) => state.breeds);
+  const service = useContext(BreedProvider);
+  const [current] = useService(service);
+  const { breedPhotoList } = current.context;
 
   return (
     <div className="PhotoSlide">

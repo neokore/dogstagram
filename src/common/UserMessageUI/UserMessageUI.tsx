@@ -1,40 +1,27 @@
-import React, { useCallback, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from 'state/rootReducer';
-import { clearUserMessage, UserMessageType } from 'state/slices/userMessageSlice';
-import './UserMessageUI.scss';
+import React, { useCallback, useContext, useEffect } from 'react';
+import { useService } from '@xstate/react';
 import { ReactComponent as InfoIcon } from 'assets/icons/info.svg';
 import { ReactComponent as ErrorIcon } from 'assets/icons/error.svg';
 import { ReactComponent as CloseIcon } from 'assets/icons/close.svg';
+import { UserMessageProvider } from 'app/App';
+import { UserMessageEvent, UserMessageSeverity } from 'machine/userMessageMachine';
+import './UserMessageUI.scss';
 
 export default function UserMessageUI () {
-  const {
-    type,
-    message
-  } = useSelector((state: RootState) => state.userMessage);
-  const dispatch = useDispatch();
+  const service = useContext(UserMessageProvider);
+  const [current, send] = useService(service);
+  const { severity, message } = current.context;
+  const type = current.value;
 
-  useEffect(() => {
-    // Autoclose info messages
-    let timeout: ReturnType<typeof setTimeout>;
-    if (type === UserMessageType.info) {
-      timeout = setTimeout(() => {
-        dispatch(clearUserMessage());
-      }, 2000);
-    }
-
-    return () => { timeout && clearTimeout(timeout); };
-  }, [dispatch, type])
-  
   const getMessageIcon = useCallback(
-    () => type === UserMessageType.error
+    () => severity === UserMessageSeverity.ERROR
       ? <ErrorIcon className="icon error" />
-      : type === UserMessageType.info
+      : severity === UserMessageSeverity.INFO
         ? <InfoIcon className="icon info" />
         : null,
-    [type]
+    [severity]
   );
-  const handleClose = () => { dispatch(clearUserMessage()); };
+  const handleClose = () => { send(UserMessageEvent.CLEAR); };
 
   if (!message) return null;
 
@@ -42,7 +29,7 @@ export default function UserMessageUI () {
     <div className="UserMessage">
       {getMessageIcon()}
       <p>{message}</p>
-      { type === UserMessageType.error && <button onClick={handleClose}><CloseIcon className="icon" /></button>}
+      { type === UserMessageSeverity.ERROR && <button onClick={handleClose}><CloseIcon className="icon" /></button>}
     </div>
   );
 }
