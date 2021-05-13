@@ -1,18 +1,19 @@
-import React, { createContext } from 'react';
-import { Interpreter } from 'xstate';
-import { useMachine } from "@xstate/react";
-import { BreedContext, BreedEvent, breedMachine, BreedStateSchema } from 'machine/breedMachine';
+import React, { createContext, useContext } from 'react';
+import { useService } from "@xstate/react";
+import { BreedMachineRefType } from 'machine/breedMachine';
+import { RootMachineProvider } from 'app/App';
 import BreedSelector from './components/BreedSelector/BreedSelector';
 import PhotoSlide from './components/PhotoViewSlide/PhotoViewSlide';
 import './PhotoViewer.scss';
 
-export const BreedProvider = createContext({} as Interpreter<BreedContext, BreedStateSchema, BreedEvent, any>);
+export const BreedProvider = createContext({} as BreedMachineRefType);
 
 export default function PhotoViewer() {
-  const [, , service] = useMachine(breedMachine);
+  const service = useContext(RootMachineProvider);
+  const [current] = useService(service);
 
   return (
-    <BreedProvider.Provider value={service}>
+    <BreedProvider.Provider value={current.context.breedsRef}>
       <div className="PhotoViewer">
         <BreedSelector />
         <PhotoSlide />

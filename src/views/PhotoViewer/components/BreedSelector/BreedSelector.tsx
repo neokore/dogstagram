@@ -1,18 +1,18 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useActor } from '@xstate/react';
+import { BreedProvider } from 'views/PhotoViewer/PhotoViewer';
+import { BreedEvent } from 'machine/breedMachine';
 
 import { Breed } from 'api/dogApi';
 import './BreedSelector.scss';
 import LoadingImg from 'assets/img/loading.png';
-import { BreedProvider } from 'views/PhotoViewer/PhotoViewer';
-import { useService } from '@xstate/react';
-import { BreedContext, BreedEventType } from 'machine/breedMachine';
 
 export default function BreedSelector() {
   const { t } = useTranslation();
-  const service = useContext(BreedProvider);
-  const [current, send] = useService(service);
-  const { breedList, selectedBreed } = current.context as BreedContext;
+  const breedActor = useContext(BreedProvider);
+  const [current, send] = useActor(breedActor);
+  const { breedList, selectedBreed } = current.context;
 
   return (
     <div className="BreedSelector">
@@ -22,14 +22,14 @@ export default function BreedSelector() {
       <select
         id="breedSelect"
         value={selectedBreed || undefined}
-        onChange={(event) => send(BreedEventType.select, { name: event.currentTarget.value})}
+        onChange={(event) => send({ type: BreedEvent.SELECT, name: event.currentTarget.value})}
       >
         {
           !selectedBreed &&
           (<option value={''}>{t('breedSelector.none')}</option>)
         }
         <option value="error">{t('breedSelector.errorBreed')}</option>
-        {breedList.map((breed: Breed) => {
+        {breedList?.map((breed: Breed) => {
           return <option key={breed.id} value={breed.id}>{breed.name}</option>
         })}
       </select>

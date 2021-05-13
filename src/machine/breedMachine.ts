@@ -1,5 +1,6 @@
-import { assign, Machine, StateNodeConfig } from 'xstate';
+import { ActorRef, assign, Machine, sendParent, StateNodeConfig } from 'xstate';
 import { Breed, getBreedList, getBreedPhotoList } from 'api/dogApi';
+import { UserMessageEvent, UserMessageSeverity } from './userMessageMachine';
 
 export interface BreedStateSchema {
   states: {
@@ -19,19 +20,22 @@ interface BreedListStateSchema {
 export interface BreedContext {
   breedList: Breed[], // {id: "breed/subbreed", name: "breed (subbreed)"}
   selectedBreed?: string | null, // id from breedList
-  breedPhotoList: string[]
+  breedPhotoList: string[],
+  errorMsg?: string | null
 }
 
-export enum BreedEventType {
-  select = 'SELECT',
-  retry = 'RETRY'
+export enum BreedEvent {
+  SELECT = 'breeds/select',
+  RETRY = 'breeds/retry'
 }
 
-export type BreedEvent =
-  | { type: BreedEventType.select; name: string }
-  | { type: BreedEventType.retry };
+export type BreedEventType =
+  | { type: BreedEvent.SELECT; name: string }
+  | { type: BreedEvent.RETRY };
 
-const fetchBreedListState: StateNodeConfig<BreedContext, BreedListStateSchema, BreedEvent> = {
+export type BreedMachineRefType = ActorRef<BreedEventType>;
+
+const fetchBreedListState: StateNodeConfig<BreedContext, BreedListStateSchema, BreedEventType> = {
   initial: 'loading',
   states: {
     loading: {
@@ -54,13 +58,13 @@ const fetchBreedListState: StateNodeConfig<BreedContext, BreedListStateSchema, B
     },
     failure: {
       on: {
-        RETRY: 'loading'
+        [BreedEvent.RETRY]: 'loading'
       }
     }
   }
 };
 
-const fetchBreedPhotoListState: StateNodeConfig<BreedContext, BreedListStateSchema, BreedEvent> = {
+const fetchBreedPhotoListState: StateNodeConfig<BreedContext, BreedListStateSchema, BreedEventType> = {
   initial: 'loading',
   states: {
     loading: {
@@ -74,7 +78,10 @@ const fetchBreedPhotoListState: StateNodeConfig<BreedContext, BreedListStateSche
           })
         },
         onError: {
-          target: 'failure'
+          target: 'failure',
+          actions: assign({
+            errorMsg: (_, event) => event.data.message
+          })
         }
       }
     },
@@ -82,30 +89,38 @@ const fetchBreedPhotoListState: StateNodeConfig<BreedContext, BreedListStateSche
       type: 'final'
     },
     failure: {
-      /* TODO: Send failure messages to UserMessageMachine
-       * Use custom action when calling useMachine among entry
-       * Use observer
-       * Use effect and subscribe
-       * ...or...
-       * Create RootMachine
+      /* Send failure messages to UserMessageMachine
+       * Options: 
+       *   - [ ] Use custom action when calling useMachine among entry
+       *   - [ ] Use observer
+       *   - [ ] Use effect and subscribe
+       *   - [x] Create RootMachine and route calls
        *
        * https://xstate.js.org/docs/packages/xstate-react/#usemachine-machine-options
        */
+      entry: sendParent(
+        (context) => ({
+          type: UserMessageEvent.SHOW,
+          severity: UserMessageSeverity.ERROR,
+          message: context.errorMsg
+        })
+      ),
       on: {
-        RETRY: 'loading'
+        [BreedEvent.RETRY]: 'loading'
       }
     }
   }
 };
 
-export const breedMachine = Machine<BreedContext, BreedStateSchema, BreedEvent>(
+export const breedMachine = Machine<BreedContext, BreedStateSchema, BreedEventType>(
   {
     id: 'breeds',
     initial: 'idle',
     context: {
       breedList: [],
       selectedBreed: null,
-      breedPhotoList: []
+      breedPhotoList: [],
+      errorMsg: null
     },
     states: {
       idle: {
@@ -116,11 +131,10 @@ export const breedMachine = Machine<BreedContext, BreedStateSchema, BreedEvent>(
       }
     },
     on: {
-      [BreedEventType.select]: {
+      [BreedEvent.SELECT]: {
         target: 'selected',
-        actions: assign((context, event) => {
+        actions: assign((_, event) => {
           return {
-            ...context,
             selectedBreed: event.name,
             breedPhotoList: []
           };
@@ -129,11 +143,6 @@ export const breedMachine = Machine<BreedContext, BreedStateSchema, BreedEvent>(
     }
   },
   {
-    actions: {
-      catchMe: () => {
-        throw new Error('catch me if you can xD')
-      }
-    },
     services: {
       getBreedList: () => getBreedList(),
       getBreedPhotoList: (context) => {

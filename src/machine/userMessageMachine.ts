@@ -1,4 +1,4 @@
-import { assign, Machine } from "xstate";
+import { ActorRef, assign, Machine } from "xstate";
 
 export interface UserMessageMachineSchema {
   states: {
@@ -8,8 +8,8 @@ export interface UserMessageMachineSchema {
 };
 
 export enum UserMessageEvent {
-  SHOW = 'SHOW',
-  CLEAR = 'CLEAR'
+  SHOW = "userMessage/show",
+  CLEAR = "userMessage/clear"
 };
 
 export type UserMessageEventType =
@@ -25,6 +25,8 @@ export interface UserMessageContext {
   message?: string;
   severity?: UserMessageSeverity;
 };
+
+export type UserMessageMachineRefType = ActorRef<UserMessageEventType>;
 
 export const userMessageMachine = Machine<UserMessageContext, UserMessageMachineSchema, UserMessageEventType>(
   {

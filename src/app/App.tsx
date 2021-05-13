@@ -1,24 +1,23 @@
 import React, { createContext } from 'react';
-import { Interpreter } from 'xstate';
 import { useMachine } from '@xstate/react';
 import PhotoViewer from 'views/PhotoViewer/PhotoViewer';
 import UserMessageUI from 'common/UserMessageUI/UserMessageUI';
-import { UserMessageContext, UserMessageEventType, userMessageMachine, UserMessageMachineSchema } from 'machine/userMessageMachine';
+import { rootMachine, RootMachineInterpreter } from 'machine/rootMachine';
 import './App.scss';
 
-export const UserMessageProvider = createContext({} as Interpreter<UserMessageContext, UserMessageMachineSchema, UserMessageEventType, any>);
+export const RootMachineProvider = createContext({} as RootMachineInterpreter);
 
 function App() {
-  const [, , service] = useMachine(userMessageMachine);
+  const [, , service] = useMachine(rootMachine);
 
   return (
-    <UserMessageProvider.Provider value={service}>
+    <RootMachineProvider.Provider value={service}>
       <div className="App">
         <header className="header">🐶 Dogstagram! 🐾</header>
         <PhotoViewer />
         <UserMessageUI />
       </div>
-    </UserMessageProvider.Provider>
+    </RootMachineProvider.Provider>
   );
 }
 
