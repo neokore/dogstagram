@@ -5,7 +5,7 @@ Dogstagram es la aplicación para la prueba de [atSistemas](https://atsistemas.c
 
 
 ## Tecnologías
-La aplicación está realizada usando React con Redux escrita en TypeScript. Las principales librerías usadas son:
+La aplicación está realizada usando React con XState escrita en TypeScript. Las principales librerías usadas son:
   - TypeScript
   - React
   - XState
